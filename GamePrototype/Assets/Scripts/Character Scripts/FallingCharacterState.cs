@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FallingCharacterState : CharacterStateBase
 {
+    bool DoubleJump = false;
+
     public override void HandleInput(Character character)
     {
     }
+
 
     public override void OnEnter(Character character)
     {
@@ -16,13 +20,21 @@ public class FallingCharacterState : CharacterStateBase
     {
         Debug.Log("Estado Falling");
         Gravity(character);
+
+        if (character.IsGrounded)
+        {
+            this.ToState(character, Character.Grounded);
+            DoubleJump = false;
+        }
         if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
             this.ToState(character, Character.Moving);
         }
-        else if (character.IsGrounded)
+        // este if deja que se pueda hacer el doble salto 
+        if (Input.GetButtonDown("Jump") && DoubleJump == false)
         {
-            this.ToState(character, Character.Grounded);
+            this.ToState(character, Character.Jumping);
+            DoubleJump = true;
         }
     }
 
