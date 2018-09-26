@@ -9,6 +9,7 @@ TagManager:
   - Diamond
   - Coin
   - Whip
+  - EdgeGrab
   layers:
   - Default
   - TransparentFX
