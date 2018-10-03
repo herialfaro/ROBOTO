@@ -32,7 +32,10 @@ public class MovingCharacterState : CharacterStateBase
         }
         else if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
-            this.ToState(character, Character.Moving);
+            if (SubirPared.CanMove)
+            {
+                this.ToState(character, Character.Moving);
+            }
         }
         else if (character.IsGrounded)
         {

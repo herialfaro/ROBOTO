@@ -8,11 +8,14 @@ public class SubirPared : MonoBehaviour {
 
     public bool SeAgarro = false;
     public bool Subio = false;
-    public GameObject Player = null;
+    static public bool CanMove = true;
+    public Transform Player = null;
+    public float BloqueoPosicionX;
+    public float BloqueoPosicionZ;
 
 	// Use this for initialization
 	void Start () {
-		
+        Player = gameObject.transform.parent.transform;
 	}
 
 	// Update is called once per frame
@@ -20,12 +23,14 @@ public class SubirPared : MonoBehaviour {
         
         if (SeAgarro) //si se agarro el personaje sube
         {
-            Player.GetComponent<CharacterController>().Move(Vector3.up * 0.2f);
+            Player.GetComponent<CharacterController>().Move(Vector3.up * 0.3f);
+            CanMove = false;
+            Player.position = new Vector3(BloqueoPosicionX, Player.position.y, BloqueoPosicionZ);
         }
         if (Subio) // si ya subio el jugador es dezplazado hacia enfrente para que quede sobre la plataforma
         {
             Player.GetComponent<CharacterController>().Move(Vector3.forward * 0.1f);
-            Invoke("Parar", 0.3f);
+            Invoke("Parar", 0.2f);
         }
     }
 
@@ -33,11 +38,13 @@ public class SubirPared : MonoBehaviour {
     //Cuando entra al trigger
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "EdgeGrab" && gameObject.transform.parent.transform.position.y <= other.transform.position.y) //si tiene tag edge grab y la posiciond el jugador es menor a la de el edge
+        if (other.tag == "EdgeGrab" && Player.position.y <= other.transform.position.y) //si tiene tag edge grab y la posiciond el jugador es menor a la de el edge
         {
             SeAgarro = true;
+            BloqueoPosicionX = Player.position.x;
+            BloqueoPosicionZ = Player.position.z;
         }
-        if (other.tag == "EdgeGrab" && gameObject.transform.parent.transform.position.y > other.transform.position.y) //si la posision del jugador es mayor al edge entonces no se agarra. sin esto el jugador no se peude tirar del edge porque el trigger lo vovleria a subir
+        if (other.tag == "EdgeGrab" && Player.position.y > other.transform.position.y) //si la posision del jugador es mayor al edge entonces no se agarra. sin esto el jugador no se peude tirar del edge porque el trigger lo vovleria a subir
         {
             SeAgarro = false;
         }
@@ -46,15 +53,16 @@ public class SubirPared : MonoBehaviour {
     //cuando termine de subir
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "EdgeGrab" && gameObject.transform.parent.transform.position.y >= other.transform.position.y) //Solo si su posision es mayor a la del edge
+        if (other.tag == "EdgeGrab" && Player.position.y >= other.transform.position.y) //Solo si su posision es mayor a la del edge
         {
             Invoke("PararAgarre", 0.1f); //vovler falso el booleano de agarre
             Subio = true;
         }
-        if (other.tag == "EdgeGrab" && gameObject.transform.parent.transform.position.y < other.transform.position.y) // si el jugador esta abajo del edge todavia, entonces "Subio" es falso
+        if (other.tag == "EdgeGrab" && Player.position.y < other.transform.position.y) // si el jugador esta abajo del edge todavia, entonces "Subio" es falso
         {
             SeAgarro = false;
             Subio = false;
+            CanMove = true;
         }
     }
     
@@ -62,6 +70,7 @@ public class SubirPared : MonoBehaviour {
     void Parar()
     {
         Subio = false;
+        CanMove = true;
     }
     void PararAgarre()
     {
