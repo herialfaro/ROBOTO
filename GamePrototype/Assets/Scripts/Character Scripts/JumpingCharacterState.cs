@@ -15,7 +15,10 @@ public class JumpingCharacterState : CharacterStateBase
 
         if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 00)
         {
-            this.ToState(character, Character.Moving);
+            if (SubirPared.CanMove)
+            {
+                this.ToState(character, Character.Moving);
+            }
         }
         else if (!character.IsGrounded)
         {

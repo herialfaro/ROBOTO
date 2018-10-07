@@ -28,7 +28,10 @@ public class FallingCharacterState : CharacterStateBase
         }
         if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
-            this.ToState(character, Character.Moving);
+            if (SubirPared.CanMove)
+            {
+                this.ToState(character, Character.Moving);
+            }
         }
         // este if deja que se pueda hacer el doble salto 
         if (Input.GetButtonDown("Jump") && DoubleJump == false)
