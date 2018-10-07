@@ -17,7 +17,7 @@ public class GroundedCharacterState : CharacterStateBase
         Debug.Log("Estado Ground");
         HandleGround(character);
 
-        
+
         if (Input.GetButtonDown("Jump") && character.IsGrounded)
         {
             this.ToState(character, Character.Jumping);
@@ -31,6 +31,7 @@ public class GroundedCharacterState : CharacterStateBase
             this.ToState(character, Character.Falling);
         }
     }
+
     private void HandleGround(Character character)
     {
         character.VerticalMomentum = 0;

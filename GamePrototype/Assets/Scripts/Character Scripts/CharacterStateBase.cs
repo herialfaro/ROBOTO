@@ -18,4 +18,5 @@ public abstract class CharacterStateBase : ICharacterState
     public abstract void FixedUpdate(Character character);
 
     public abstract void HandleInput(Character character);
+    
 }

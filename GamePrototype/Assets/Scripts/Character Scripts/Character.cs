@@ -38,6 +38,10 @@ public class Character : MonoBehaviour
     public static CharacterStateBase Moving;
 
     public static bool isGrounded = true;
+
+    // este bool es para verificar si el personaje hizo un double jump 
+    public bool isDoubleJump = false;
+
     public bool isWalled;
 
     public ICharacterState State
@@ -115,6 +119,20 @@ public class Character : MonoBehaviour
         private set
         {
             isGrounded = value;
+        }
+    }
+    /*todo lo de abajo es para que se pueda 
+     usar el "isDoubleJump" en otras partes del
+     codigo */
+    public bool IsDoubleJump
+    {
+        get
+        {
+            return isDoubleJump;
+        }
+        set
+        {
+           isDoubleJump = value;
         }
     }
 
