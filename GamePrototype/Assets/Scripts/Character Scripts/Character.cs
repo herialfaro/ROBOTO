@@ -36,8 +36,11 @@ public class Character : MonoBehaviour
     public static CharacterStateBase Grounded;
     public static CharacterStateBase Falling;
     public static CharacterStateBase Moving;
+    public static CharacterStateBase Damage;
 
     public static bool isGrounded = true;
+    public static bool isInjured = false;
+    public static bool canBeHurt = true;
     public bool isWalled;
 
     public ICharacterState State
@@ -131,6 +134,30 @@ public class Character : MonoBehaviour
         }
     }
 
+    public bool IsInjured
+    {
+        get
+        {
+            return isInjured;
+        }
+        set
+        {
+            isInjured = value;
+        }
+    }
+
+    public bool CanBeHurt
+    {
+        get
+        {
+            return canBeHurt;
+        }
+        set
+        {
+            canBeHurt = value;
+        }
+    }
+
     bool CursorLockedVar;
 
     private void Awake()
@@ -141,6 +168,7 @@ public class Character : MonoBehaviour
         Jumping = new JumpingCharacterState();
         Falling = new FallingCharacterState();
         Moving = new MovingCharacterState();
+        Damage = new DamageCharacterState();
     }
 
     private void Start()
@@ -186,6 +214,10 @@ public class Character : MonoBehaviour
         //AxisDirection();
 
         CheckGrounded();
+        if (isInjured)
+        {
+            Invoke("checkHurtTime", 1);
+        }
     }
     public void FixedUpdate()
     {
@@ -224,5 +256,11 @@ public class Character : MonoBehaviour
 
         transform.TransformDirection(movementVector);
         flyBoy.Move(movementVector * Time.deltaTime);
+    }
+
+    public void checkHurtTime()
+    {
+        isInjured = false;
+        CanBeHurt = true;
     }
 }

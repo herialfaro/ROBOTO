@@ -22,7 +22,7 @@ public class MovingCharacterState : CharacterStateBase
         HandleMoving(character);
 
 
-         if (Input.GetButtonDown("Jump") && character.IsGrounded)
+         if (Input.GetButtonDown("Jump") && character.IsGrounded && !character.IsInjured)
         {
             this.ToState(character, Character.Jumping);
         }
@@ -30,16 +30,20 @@ public class MovingCharacterState : CharacterStateBase
         {
             this.ToState(character, Character.Falling);
         }
-        else if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
+        else if (Input.GetAxisRaw("Horizontal") != 0.2 && !character.IsInjured || Input.GetAxisRaw("Vertical") != 0 && !character.IsInjured)
         {
             if (SubirPared.CanMove)
             {
                 this.ToState(character, Character.Moving);
             }
         }
-        else if (character.IsGrounded)
+        else if (character.IsGrounded && !character.IsInjured)
         {
             this.ToState(character, Character.Grounded);
+        }
+        else if (character.IsInjured)
+        {
+            this.ToState(character, Character.Damage);
         }
     }
 
