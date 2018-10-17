@@ -30,7 +30,7 @@ public class MovingCharacterState : CharacterStateBase
         {
             this.ToState(character, Character.Falling);
         }
-        else if (Input.GetAxisRaw("Horizontal") != 0.2 && !character.IsInjured || Input.GetAxisRaw("Vertical") != 0 && !character.IsInjured)
+        else if (Input.GetAxisRaw("Horizontal") != 0.2|| Input.GetAxisRaw("Vertical") != 0)
         {
             if (SubirPared.CanMove)
             {

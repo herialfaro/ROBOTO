@@ -10,6 +10,7 @@ TagManager:
   - Coin
   - Whip
   - EdgeGrab
+  - Enemy
   layers:
   - Default
   - TransparentFX

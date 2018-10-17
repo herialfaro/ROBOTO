@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ClaseEntidad : MonoBehaviour
 {
@@ -56,6 +57,20 @@ public class ClaseEntidad : MonoBehaviour
             coins++;
             coinText.text = " + " + coins.ToString();
             PlaySoundFX.AudioName = "UI and Item Sound Effects/OGG/Item1A";
+            PlaySoundFX.Play = true;
+        }
+        else if (other.gameObject.CompareTag("Enemy") && Character.canBeHurt && !Character.isInjured)
+        {
+            Debug.Log("Can't Be hurt");
+            Character.canBeHurt = false;
+            Character.isInjured = true;
+            vida--;
+            if(vida == 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);//reiniciar nivel
+            }
+            lifeText.text = vida.ToString();
+            PlaySoundFX.AudioName = "Soundclip/hit";
             PlaySoundFX.Play = true;
         }
     }

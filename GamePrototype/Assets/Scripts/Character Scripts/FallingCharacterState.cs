@@ -16,7 +16,7 @@ public class FallingCharacterState : CharacterStateBase
     {
         Debug.Log("Estado Falling");
         Gravity(character);
-        if (Input.GetAxisRaw("Horizontal") != 0.2 && !character.IsInjured || Input.GetAxisRaw("Vertical") != 0 && !character.IsInjured)
+        if (Input.GetAxisRaw("Horizontal") != 0.2|| Input.GetAxisRaw("Vertical") != 0)
         {
             if (SubirPared.CanMove)
             {

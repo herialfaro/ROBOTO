@@ -43,6 +43,8 @@ public class Character : MonoBehaviour
     public static bool canBeHurt = true;
     public bool isWalled;
 
+    public GameObject hitBox = null;
+
     public ICharacterState State
     {
         get
@@ -158,6 +160,19 @@ public class Character : MonoBehaviour
         }
     }
 
+    public GameObject HitBox
+    {
+        get
+        {
+            return hitBox;
+        }
+
+        set
+        {
+            hitBox = value;
+        }
+    }
+
     bool CursorLockedVar;
 
     private void Awake()
@@ -214,9 +229,11 @@ public class Character : MonoBehaviour
         //AxisDirection();
 
         CheckGrounded();
-        if (isInjured)
+        if (isInjured && !CanBeHurt && HitBox.activeInHierarchy)
         {
-            Invoke("checkHurtTime", 1);
+            HitBox.SetActive(false);
+            Invoke("checkHurtTime", 1.5f); //invocar en 1.5 segundos
+
         }
     }
     public void FixedUpdate()
@@ -260,7 +277,9 @@ public class Character : MonoBehaviour
 
     public void checkHurtTime()
     {
+        HitBox.SetActive(true);
         isInjured = false;
         CanBeHurt = true;
+        Debug.Log("Can be hurt");
     }
 }
