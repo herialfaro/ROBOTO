@@ -20,19 +20,25 @@ public class FallingCharacterState : CharacterStateBase
       
         Debug.Log("Estado Falling");
         Gravity(character);
+        Debug.Log("Estado FALLING Jump [" + character.isDoubleJump + ']');
 
+        /*Todo lo que hace esto es Verificar 
+         * si el personaje esta 
+         * en el suelo */
+
+        if (character.IsGrounded)
+        {
+            character.isDoubleJump = false;
+        }
         if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
             this.ToState(character, Character.Moving);
         }
         // este if verifica si el presonaje puede hacer el double salto
-        if (Input.GetButtonDown("Jump") && character.IsDoubleJump == false)
+        else if (Input.GetButtonDown("Jump") && character.IsDoubleJump == false)
         {
             //dicimos que el presonaje hizo el doble salto 
             character.IsDoubleJump = true;
-
-            // esto es para monitorear los resultados 
-            Debug.Log("Estado Falling Jump [" + character.isDoubleJump + ']');
 
             // el presonaje hace el salto 
             this.ToState(character, Character.Jumping);

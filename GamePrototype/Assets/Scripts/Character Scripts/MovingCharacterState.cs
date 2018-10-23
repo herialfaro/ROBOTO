@@ -20,19 +20,29 @@ public class MovingCharacterState : CharacterStateBase
     {
         Debug.Log("Estado Move");
         HandleMoving(character);
+        Debug.Log("Estado MOVE Jump [" + character.isDoubleJump + ']');
+
 
         /* este if verifica si el personaje esta en el piso 
           y luego lo deja saltar , con el boton que definimos como "Jump" */
+
+        if (character.IsGrounded)
+        {
+            character.isDoubleJump = false;
+        }
         if (Input.GetButtonDown("Jump") && character.IsGrounded)
         {
             // decimos que el personaje puede hacer el doble salto 
-           character.isDoubleJump = false;
-            
-            // esto es para que yo vea monitorear los resultados  
-            Debug.Log("Estado Moving Jump [" + character.isDoubleJump + ']');
+            character.isDoubleJump = false ;
 
             //esto es para iniciar el salto .
            this.ToState(character, Character.Jumping);
+        }
+        // verifica que el personaje
+       else if (Input.GetButtonDown("Jump") && character.isDoubleJump == false)
+        {
+            character.isDoubleJump = true;
+            this.ToState(character, Character.Jumping);
         }
         else if (!character.IsGrounded)
         {

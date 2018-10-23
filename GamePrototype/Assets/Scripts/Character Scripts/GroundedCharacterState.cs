@@ -10,12 +10,15 @@ public class GroundedCharacterState : CharacterStateBase
 
     public override void OnEnter(Character character)
     {
+ 
     }
 
     public override void FixedUpdate(Character character)
     {
         Debug.Log("Estado Ground");
         HandleGround(character);
+
+        character.isDoubleJump = false;
 
 
         if (Input.GetButtonDown("Jump") && character.IsGrounded)
