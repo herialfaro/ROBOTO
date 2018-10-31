@@ -37,6 +37,7 @@ public class CamaraMouse : MonoBehaviour {
     Vector3 highVector;
     float plusY = .1f;
     float Cam_PlayerDistance;
+    RaycastHit hit;
 
     private void Awake()
     {
@@ -84,27 +85,33 @@ public class CamaraMouse : MonoBehaviour {
         }
         SelectState();
         //Colision
-        Vector = objective.transform.position - transform.position;
-        Cam_PlayerDistance = Mathf.Sqrt(Mathf.Pow(Vector.x, 2) + Mathf.Pow(Vector.y, 2) + Mathf.Pow(Vector.z, 2));
-        RaycastHit hit;
-        //if (Physics.Raycast(objective.transform.position, transform.position, Cam_PlayerDistance))
-        if (Physics.Raycast(objective.transform.position, transform.position, out hit, Cam_PlayerDistance))
-        {
-            highVector = hit.point;
-            highVector.y = hit.point.y + 5;
-            //transform.position = Vector3.Lerp(transform.position, highVector, plusY);
-            transform.position = Vector3.Lerp(transform.position, hit.point, plusY);    //AQUI PRRO ******************************
-            if (plusY < 1)
-            {
-                plusY += .1f;
-            }
-            //Debug.Log("ALV PRRO");
-        }
-        else
-        {
-            plusY = .1f;
-        }
-        Debug.DrawLine(objective.transform.position, transform.position, Color.red);
+        //Vector = objective.transform.position - transform.position;
+        //Cam_PlayerDistance = Vector.magnitude;
+        ////Cam_PlayerDistance = Mathf.Sqrt(Mathf.Pow(Vector.x, 2) + Mathf.Pow(Vector.y, 2) + Mathf.Pow(Vector.z, 2));
+        //if (Physics.Raycast(objective.transform.position, transform.position, out hit, Cam_PlayerDistance*9))
+        //{
+        //    highVector = hit.point;
+        //    highVector.y = hit.point.y + 3.5f;
+        //    //transform.position = Vector3.Lerp(transform.position, hit.point, plusY);
+        //    transform.position = Vector3.Lerp(transform.position, highVector, plusY);
+        //    if (plusY < 1)
+        //    {
+        //        plusY += .1f;
+        //    }
+        //}
+        //else
+        //{
+        //    //transform.position = Vector3.Lerp(transform.position, hit.point, plusY);
+        //    transform.position = Vector3.Lerp(transform.position, highVector, plusY);
+        //    if (plusY > .1)
+        //    {
+        //        plusY -= .1f;
+        //    }
+        //}
+        //Debug.Log("Distance: "+Cam_PlayerDistance);
+        //Debug.DrawLine(objective.transform.position, transform.position, Color.red);
+        //Debug.DrawLine(hit.point, objective.transform.position, Color.blue);
+        //Debug.DrawLine(hit.point, transform.position, Color.green);
         transform.LookAt(objective.transform);
     }
 
@@ -130,7 +137,7 @@ public class CamaraMouse : MonoBehaviour {
         float horizontal = MoveX * VelRotacion * Time.deltaTime;
         pivot.transform.Rotate(0.0f, horizontal, 0.0f);
         //}
-
+        
         //if (MouseY != 0)
         //{
         /*float vertical = MouseY * VelRotacion * Time.deltaTime;

@@ -5,6 +5,8 @@ using UnityEngine;
 public class MovingCharacterState : CharacterStateBase
 {
     Vector2 direction;
+    public GameObject PlayerForward = new GameObject();
+    public Vector3 DireccionForward;
 
     public override void HandleInput(Character character)
     {
@@ -20,9 +22,10 @@ public class MovingCharacterState : CharacterStateBase
     {
         Debug.Log("Estado Move");
         HandleMoving(character);
+        //Rotar al jugador
+        character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(DireccionForward), 0.15F);
 
-
-         if (Input.GetButtonDown("Jump") && character.IsGrounded)
+        if (Input.GetButtonDown("Jump") && character.IsGrounded)
         {
             this.ToState(character, Character.Jumping);
         }
@@ -58,5 +61,18 @@ public class MovingCharacterState : CharacterStateBase
         direction = Rotate(direction, -rotation);
         character.HorizontalMomentum = direction.x * character.moveSpeed;
         character.HorizontalMovementZ = direction.y * character.moveSpeed;
+
+        DireccionForward.x = direction.x;
+        DireccionForward.z = direction.y;
+        DireccionForward.Normalize();
+        DireccionForward = DireccionForward * 5;    //Conseguir la direccion hacia el que se esta moviendo
+
+        if(DireccionForward != Vector3.zero)
+        {
+            PlayerForward.transform.position = character.transform.position + DireccionForward; //Actualizar la posicion de la direccion relativa al personaje
+        }
+
+        //character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(DireccionForward.normalized), 0.15F);
+        Debug.DrawLine(PlayerForward.transform.position, character.transform.position, Color.red);
     }
 }

@@ -40,6 +40,8 @@ public class Character : MonoBehaviour
     public static bool isGrounded = true;
     public bool isWalled;
 
+    public Vector3 Forward;
+
     public ICharacterState State
     {
         get
@@ -191,6 +193,8 @@ public class Character : MonoBehaviour
     {
         this.State.FixedUpdate(this);
         HandleMovement();
+
+        //GameObject.FindGameObjectWithTag("Player").transform.rotation = Quaternion.Slerp(GameObject.FindGameObjectWithTag("Player").transform.rotation, Quaternion.LookRotation(Forward), 0.15F);
     }
 
     private void CheckGrounded()
