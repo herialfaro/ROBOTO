@@ -30,19 +30,20 @@ public class AnimacionesRoboto : MonoBehaviour {
         else
         {
             animator.SetBool("isAtacando1", false);
+            animator.SetBool("isMoving1", false);
         }
 
-        if(character_controller.state == Character.Moving)
+        if(Input.GetButton("Horizontal"))
         {
-
+            animator.SetBool("isMoving1", true);
         }
-        else if(character_controller.state == Character.Jumping)
+        else if (Input.GetButton("Vertical"))
         {
-
+            animator.SetBool("isMoving1", true);
         }
-        else if(character_controller.state == Character.Falling)
+        else
         {
-
+            animator.SetBool("isMoving1", false);
         }
 
         if (timespawn <= 0)
