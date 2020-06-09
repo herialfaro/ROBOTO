@@ -41,7 +41,7 @@ public class CamaraMouse : MonoBehaviour {
     private void Awake()
     {
         pivot = new GameObject();
-        this.transform.position = new Vector3(objective.transform.position.x + -1.5f, objective.transform.position.y + -1.0f, objective.transform.position.z + 6.93f);
+        this.transform.position = new Vector3(objective.transform.position.x + 0f, objective.transform.position.y + -1.0f, objective.transform.position.z + 7f);
         state_Locked = false;
         Lookforobjects = true;
         SelectStateEnabled = true;

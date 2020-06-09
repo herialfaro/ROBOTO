@@ -8,8 +8,8 @@ public class Character : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public const float JUMP_HEIGHT = 2;
-    public const float JUMP_TIME_1 = .8f;
+    public const float JUMP_HEIGHT = 2f;
+    public const float JUMP_TIME_1 = .6f;
     public const float JUMP_TIME_2 = .6f;
 
     /* 
@@ -28,6 +28,7 @@ public class Character : MonoBehaviour
     private float horizontalMovementZ;
 
     private Vector3 movementVector;
+    private Vector3 directionVector;
 
     public ICharacterState state;
     private CharacterController flyBoy;
@@ -174,14 +175,13 @@ public class Character : MonoBehaviour
             CursorLockedVar = (false);
         }
 
-        //if(Input.GetAxisRaw("Mouse X") > .2f || Input.GetAxisRaw("Mouse X") < -.2f)
-        //{
-        //    var CharacterRotation = Camera.main.transform.rotation;
-        //    CharacterRotation.x = 0;
-        //    CharacterRotation.z = 0;
-        //    transform.rotation = CharacterRotation;
-        //   // AxisDirection();
-        //}
+        /*if(Input.GetAxisRaw("Mouse X") > .2f || Input.GetAxisRaw("Mouse X") < -.2f)
+        {
+            var CharacterRotation = Camera.main.transform.rotation;
+            CharacterRotation.x = 0;
+            CharacterRotation.z = 0;
+            flyBoy.transform.rotation = CharacterRotation;
+        }*/
 
         //AxisDirection();
 
@@ -222,7 +222,16 @@ public class Character : MonoBehaviour
         movementVector.x = horizontalMomentum;
         movementVector.z = horizontalMovementZ;
 
+        directionVector = flyBoy.transform.forward;
+        //directionVector.Normalize();
+        directionVector.x = directionVector.x / 10;
+        directionVector.z = directionVector.z / 10;
+        directionVector.x += horizontalMomentum/360;
+        directionVector.z += horizontalMovementZ/360;
+
         transform.TransformDirection(movementVector);
         flyBoy.Move(movementVector * Time.deltaTime);
+        transform.TransformDirection(directionVector);
+        flyBoy.transform.forward = directionVector * Time.deltaTime;
     }
 }

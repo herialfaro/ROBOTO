@@ -17,12 +17,12 @@ public class GroundedCharacterState : CharacterStateBase
         Debug.Log("Estado Ground");
         HandleGround(character);
 
-        
+
         if (Input.GetButtonDown("Jump") && character.IsGrounded)
         {
             this.ToState(character, Character.Jumping);
         }
-        else if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
+        else if (Input.GetAxisRaw("Horizontal") >= 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
             if (SubirPared.CanMove)
             {
