@@ -18,7 +18,6 @@ public class FallingCharacterState : CharacterStateBase
 
     public override void FixedUpdate(Character character)
     {
-        Debug.Log("Estado Falling");
         Gravity(character);
 
         if (character.IsGrounded)
@@ -32,12 +31,6 @@ public class FallingCharacterState : CharacterStateBase
             {
                 this.ToState(character, Character.Moving);
             }
-        }
-        // este if deja que se pueda hacer el doble salto 
-        if (Input.GetButtonDown("Jump") && DoubleJump == false)
-        {
-            this.ToState(character, Character.Jumping);
-            DoubleJump = true;
         }
     }
 

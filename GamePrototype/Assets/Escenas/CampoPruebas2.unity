@@ -2115,7 +2115,7 @@ MonoBehaviour:
   hook: {fileID: 1725691558}
   hookholder: {fileID: 934073766}
   hookTravelSpeed: 40
-  hookPlayerSpeed: 20
+  hookPlayerSpeed: 30
   maxDistance: 35
   SeekTime: 1
   isHooked: 0

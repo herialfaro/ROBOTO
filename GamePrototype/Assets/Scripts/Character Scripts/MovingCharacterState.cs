@@ -18,11 +18,10 @@ public class MovingCharacterState : CharacterStateBase
 
     public override void FixedUpdate(Character character)
     {
-        Debug.Log("Estado Move");
         HandleMoving(character);
 
 
-         if (Input.GetButtonDown("Jump") && character.IsGrounded)
+        if (Input.GetButton("Jump") && character.IsGrounded)
         {
             this.ToState(character, Character.Jumping);
         }

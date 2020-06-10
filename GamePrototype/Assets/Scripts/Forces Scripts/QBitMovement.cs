@@ -56,7 +56,6 @@ public class QBitMovement : MonoBehaviour
         randomRange = Random.Range(0.0f, 1.0f);
         QBitState();
         Locomotion();
-        Debug.Log(actualstate);
     }
 
     private void QBitState()

@@ -8,9 +8,11 @@ public class Character : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public const float JUMP_HEIGHT = 2f;
+    public const float JUMP_HEIGHT = 3f;
     public const float JUMP_TIME_1 = .6f;
-    public const float JUMP_TIME_2 = .6f;
+    public const float JUMP_TIME_2 = .5f;
+
+    private int icounter;
 
     /* 
      * Gravity based on this formula   G= -8h/t(total)
@@ -142,6 +144,8 @@ public class Character : MonoBehaviour
         Jumping = new JumpingCharacterState();
         Falling = new FallingCharacterState();
         Moving = new MovingCharacterState();
+
+        icounter = 0;
     }
 
     private void Start()
