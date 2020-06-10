@@ -84,7 +84,7 @@ public class CamaraMouse : MonoBehaviour {
         }
         SelectState();
         //Colision
-        Vector = objective.transform.position - transform.position;
+        /*Vector = objective.transform.position - transform.position;
         Cam_PlayerDistance = Mathf.Sqrt(Mathf.Pow(Vector.x, 2) + Mathf.Pow(Vector.y, 2) + Mathf.Pow(Vector.z, 2));
         RaycastHit hit;
         //if (Physics.Raycast(objective.transform.position, transform.position, Cam_PlayerDistance))
@@ -103,7 +103,7 @@ public class CamaraMouse : MonoBehaviour {
         else
         {
             plusY = .1f;
-        }
+        }*/
         Debug.DrawLine(objective.transform.position, transform.position, Color.red);
         transform.LookAt(objective.transform);
     }
