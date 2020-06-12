@@ -57,7 +57,7 @@ public class QBitMovement : MonoBehaviour
         Random.InitState((int)System.DateTime.Now.Ticks);
         randomRange = Random.Range(0.0f, 1.0f);
 
-        if(UpdateCounter > 12)
+        if(UpdateCounter > 6)
         {
             QBitState();
             Locomotion();
