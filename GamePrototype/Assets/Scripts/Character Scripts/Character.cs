@@ -39,9 +39,14 @@ public class Character : MonoBehaviour
     public static CharacterStateBase Grounded;
     public static CharacterStateBase Falling;
     public static CharacterStateBase Moving;
+    public static CharacterStateBase Damage;
 
     public static bool isGrounded = true;
+    public static bool isInjured = false;
+    public static bool canBeHurt = true;
     public bool isWalled;
+
+    public GameObject hitBox = null;
 
     public ICharacterState State
     {
@@ -134,6 +139,43 @@ public class Character : MonoBehaviour
         }
     }
 
+    public bool IsInjured
+    {
+        get
+        {
+            return isInjured;
+        }
+        set
+        {
+            isInjured = value;
+        }
+    }
+
+    public bool CanBeHurt
+    {
+        get
+        {
+            return canBeHurt;
+        }
+        set
+        {
+            canBeHurt = value;
+        }
+    }
+
+    public GameObject HitBox
+    {
+        get
+        {
+            return hitBox;
+        }
+
+        set
+        {
+            hitBox = value;
+        }
+    }
+
     bool CursorLockedVar;
 
     private void Awake()
@@ -144,6 +186,7 @@ public class Character : MonoBehaviour
         Jumping = new JumpingCharacterState();
         Falling = new FallingCharacterState();
         Moving = new MovingCharacterState();
+        Damage = new DamageCharacterState();
 
         icounter = 0;
     }
@@ -190,6 +233,12 @@ public class Character : MonoBehaviour
         //AxisDirection();
 
         CheckGrounded();
+        if (isInjured && !CanBeHurt && HitBox.activeInHierarchy)
+        {
+            HitBox.SetActive(false);
+            Invoke("checkHurtTime", 1.5f); //invocar en 1.5 segundos
+
+        }
     }
     public void FixedUpdate()
     {
@@ -237,5 +286,13 @@ public class Character : MonoBehaviour
         flyBoy.Move(movementVector * Time.deltaTime);
         transform.TransformDirection(directionVector);
         flyBoy.transform.forward = directionVector * Time.deltaTime;
+    }
+
+    public void checkHurtTime()
+    {
+        HitBox.SetActive(true);
+        isInjured = false;
+        CanBeHurt = true;
+        Debug.Log("Can be hurt");
     }
 }

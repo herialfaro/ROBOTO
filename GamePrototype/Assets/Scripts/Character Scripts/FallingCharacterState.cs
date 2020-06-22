@@ -25,12 +25,16 @@ public class FallingCharacterState : CharacterStateBase
             this.ToState(character, Character.Grounded);
             DoubleJump = false;
         }
-        if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
+        else if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
             if (SubirPared.CanMove)
             {
                 this.ToState(character, Character.Moving);
             }
+        }
+        else if (character.IsInjured)
+        {
+            this.ToState(character, Character.Damage);
         }
     }
 

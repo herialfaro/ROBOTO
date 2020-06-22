@@ -36,9 +36,13 @@ public class MovingCharacterState : CharacterStateBase
                 this.ToState(character, Character.Moving);
             }
         }
-        else if (character.IsGrounded)
+        else if (character.IsGrounded && !character.IsInjured)
         {
             this.ToState(character, Character.Grounded);
+        }
+        else if (character.IsInjured)
+        {
+            this.ToState(character, Character.Damage);
         }
     }
 

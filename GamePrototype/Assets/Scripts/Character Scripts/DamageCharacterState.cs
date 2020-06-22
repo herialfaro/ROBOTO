@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundedCharacterState : CharacterStateBase
+public class DamageCharacterState : CharacterStateBase
 {
+
     public override void HandleInput(Character character)
     {
     }
 
     public override void OnEnter(Character character)
     {
-
+        
     }
+
     public override void FixedUpdate(Character character)
     {
-        HandleGround(character);
-
-
-        if (Input.GetButton("Jump") && character.IsGrounded)
+        Debug.Log("Estado Herido");
+        
+        if (Input.GetButtonDown("Jump") && character.IsGrounded && !character.IsInjured)
         {
             this.ToState(character, Character.Jumping);
         }
@@ -28,18 +29,14 @@ public class GroundedCharacterState : CharacterStateBase
                 this.ToState(character, Character.Moving);
             }
         }
-        else if (!character.IsGrounded)
+        else if (!character.IsGrounded && !character.IsInjured)
         {
             this.ToState(character, Character.Falling);
         }
-        else if (character.IsInjured)
+        else if (Character.isInjured)
         {
             this.ToState(character, Character.Damage);
         }
     }
-    private void HandleGround(Character character)
-    {
-        character.VerticalMomentum = 0;
-        character.HorizontalMomentum = 0;
-    }
+    
 }

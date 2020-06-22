@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ClaseEntidad : MonoBehaviour
 {
@@ -58,6 +59,24 @@ public class ClaseEntidad : MonoBehaviour
             coins++;
             coinText.text = " + " + coins.ToString();
             CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item1A";
+            CollectableSounds.Play = true;
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit other)
+    {
+        if (other.gameObject.CompareTag("Lockable") && other.gameObject.layer == 8 && Character.canBeHurt && !Character.isInjured)
+        {
+            Debug.Log("Can't Be hurt");
+            Character.canBeHurt = false;
+            Character.isInjured = true;
+            vida--;
+            if (vida == 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);//reiniciar nivel
+            }
+            lifeText.text = vida.ToString();
+            CollectableSounds.AudioName = "Soundclip/hit";
             CollectableSounds.Play = true;
         }
     }
