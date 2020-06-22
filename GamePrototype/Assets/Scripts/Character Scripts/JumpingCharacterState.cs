@@ -13,7 +13,7 @@ public class JumpingCharacterState : CharacterStateBase
         Debug.Log("Estado Jump");
         HandleJump(character);
 
-        if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 00)
+        if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
             if (SubirPared.CanMove)
             {

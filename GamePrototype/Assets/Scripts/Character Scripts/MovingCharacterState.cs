@@ -20,7 +20,7 @@ public class MovingCharacterState : CharacterStateBase
     {
         HandleMoving(character);
 
-
+        
         if (Input.GetButton("Jump") && character.IsGrounded)
         {
             this.ToState(character, Character.Jumping);

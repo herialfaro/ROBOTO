@@ -14,6 +14,8 @@ public class ClaseEntidad : MonoBehaviour
     public Text lifeText;
     public Text gemText;
 
+    public PlaySoundFX CollectableSounds;
+
     private void Start()
     {
         coins = 0;
@@ -39,24 +41,24 @@ public class ClaseEntidad : MonoBehaviour
                 vida++;
             }
             lifeText.text = vida.ToString();
-            PlaySoundFX.AudioName = "UI and Item Sound Effects/OGG/Item2B";
-            PlaySoundFX.Play = true;
+            CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item2B";
+            CollectableSounds.Play = true;
         }
         else if (other.gameObject.CompareTag("Diamond"))
         {
             other.gameObject.SetActive(false);
             gems++;
             gemText.text = " + " + gems.ToString();
-            PlaySoundFX.AudioName = "UI and Item Sound Effects/OGG/Item3A";
-            PlaySoundFX.Play = true;
+            CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item3A";
+            CollectableSounds.Play = true;
         }
         else if(other.gameObject.CompareTag("Coin"))
         {
             other.gameObject.SetActive(false);
             coins++;
             coinText.text = " + " + coins.ToString();
-            PlaySoundFX.AudioName = "UI and Item Sound Effects/OGG/Item1A";
-            PlaySoundFX.Play = true;
+            CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item1A";
+            CollectableSounds.Play = true;
         }
     }
 };

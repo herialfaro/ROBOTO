@@ -67,44 +67,46 @@ public class CamaraMouse : MonoBehaviour {
 
     // Update is called once per frame
     private void LateUpdate() {
-
-        for (int i = 0; i < target_list.Length; i++)
+        if(target_list != null)
         {
-            float fDistance = Vector3.Distance(target_list[i].lockable_target.transform.position, objective.transform.position);
-            target_list[i].distance_target = fDistance;
-            if (fDistance <= lockOnRadius)
+            for (int i = 0; i < target_list.Length; i++)
             {
-                target_list[i].isLockable = true;
+                float fDistance = Vector3.Distance(target_list[i].lockable_target.transform.position, objective.transform.position);
+                target_list[i].distance_target = fDistance;
+                if (fDistance <= lockOnRadius)
+                {
+                    target_list[i].isLockable = true;
+                }
+                else
+                {
+                    target_list[i].isLockable = false;
+                    target_list[i].isOpen = true;
+                }
+            }
+            SelectState();
+            //Colision
+            Vector = objective.transform.position - transform.position;
+            Cam_PlayerDistance = Mathf.Sqrt(Mathf.Pow(Vector.x, 2) + Mathf.Pow(Vector.y, 2) + Mathf.Pow(Vector.z, 2));
+            RaycastHit hit;
+            //if (Physics.Raycast(objective.transform.position, transform.position, Cam_PlayerDistance)) ;
+            if (Physics.Raycast(objective.transform.position, transform.position, out hit, Cam_PlayerDistance))
+            {
+                highVector = hit.point;
+                highVector.y = hit.point.y + 2;
+                transform.position = Vector3.Lerp(transform.position, highVector, plusY);
+                //transform.position = Vector3.Lerp(transform.position, hit.point, plusY);    //AQUI PRRO ******************************
+                if (plusY < 0.5)
+                {
+                    plusY += .1f;
+                }
+                //Debug.Log("ALV PRRO");
             }
             else
             {
-                target_list[i].isLockable = false;
-                target_list[i].isOpen = true;
+                plusY = .1f;
             }
+            Debug.DrawLine(objective.transform.position, transform.position, Color.red);
         }
-        SelectState();
-        //Colision
-        /*Vector = objective.transform.position - transform.position;
-        Cam_PlayerDistance = Mathf.Sqrt(Mathf.Pow(Vector.x, 2) + Mathf.Pow(Vector.y, 2) + Mathf.Pow(Vector.z, 2));
-        RaycastHit hit;
-        //if (Physics.Raycast(objective.transform.position, transform.position, Cam_PlayerDistance))
-        if (Physics.Raycast(objective.transform.position, transform.position, out hit, Cam_PlayerDistance))
-        {
-            highVector = hit.point;
-            highVector.y = hit.point.y + 5;
-            //transform.position = Vector3.Lerp(transform.position, highVector, plusY);
-            transform.position = Vector3.Lerp(transform.position, hit.point, plusY);    //AQUI PRRO ******************************
-            if (plusY < 1)
-            {
-                plusY += .1f;
-            }
-            //Debug.Log("ALV PRRO");
-        }
-        else
-        {
-            plusY = .1f;
-        }*/
-        Debug.DrawLine(objective.transform.position, transform.position, Color.red);
         transform.LookAt(objective.transform);
     }
 

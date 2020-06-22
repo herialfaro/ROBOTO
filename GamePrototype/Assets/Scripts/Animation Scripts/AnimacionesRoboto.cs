@@ -21,14 +21,21 @@ public class AnimacionesRoboto : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetButtonDown("Punch"))
+        if (Input.GetButton("Punch"))
         {
             animator.SetBool("isAtacando1", true);
-            timespawn = 0.5f;
+            timespawn = 0.3f;
             punch_enabled = true;
+        }
+        else if(Input.GetButton("Jump"))
+        {
+            animator.SetBool("isJumping1", true);
+            animator.SetBool("isAtacando1", false);
+            animator.SetBool("isMoving1", false);
         }
         else
         {
+            animator.SetBool("isJumping1", false);
             animator.SetBool("isAtacando1", false);
             animator.SetBool("isMoving1", false);
         }
@@ -48,7 +55,7 @@ public class AnimacionesRoboto : MonoBehaviour {
 
         if (timespawn <= 0)
         {
-            timespawn = 0.5f;
+            timespawn = 0.3f;
             punch_enabled = false;
         }
         else
