@@ -114,7 +114,7 @@ public class CamaraMouse : MonoBehaviour {
     {
         var MoveX = 0f;
         var MoveY = 0f;
-        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+        /*if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
             MoveX = Input.GetAxis("Mouse X");
             MoveY = Input.GetAxis("Mouse Y");
@@ -125,7 +125,7 @@ public class CamaraMouse : MonoBehaviour {
             MoveX = Input.GetAxis("Joystick X");
             MoveY = Input.GetAxis("Joystick Y");
             VelRotacion = RawVelocity * 30;
-        }
+        }*/
 
         //if (MouseX != 0)
         //{

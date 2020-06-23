@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class ClaseEntidad : MonoBehaviour
 {
@@ -16,6 +15,7 @@ public class ClaseEntidad : MonoBehaviour
     public Text gemText;
 
     public PlaySoundFX CollectableSounds;
+    public Reset_Scene ResetSceneManager;
 
     private void Start()
     {
@@ -42,7 +42,8 @@ public class ClaseEntidad : MonoBehaviour
                 vida++;
             }
             lifeText.text = vida.ToString();
-            CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item2B";
+            //CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item2B";
+            CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/recuperar salud";
             CollectableSounds.Play = true;
         }
         else if (other.gameObject.CompareTag("Diamond"))
@@ -50,7 +51,8 @@ public class ClaseEntidad : MonoBehaviour
             other.gameObject.SetActive(false);
             gems++;
             gemText.text = " + " + gems.ToString();
-            CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item3A";
+            //CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item3A";
+            CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/gema";
             CollectableSounds.Play = true;
         }
         else if(other.gameObject.CompareTag("Coin"))
@@ -58,7 +60,8 @@ public class ClaseEntidad : MonoBehaviour
             other.gameObject.SetActive(false);
             coins++;
             coinText.text = " + " + coins.ToString();
-            CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item1A";
+            //CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item1A";
+            CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/gema";
             CollectableSounds.Play = true;
         }
     }
@@ -73,10 +76,10 @@ public class ClaseEntidad : MonoBehaviour
             vida--;
             if (vida == 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);//reiniciar nivel
+                ResetSceneManager.Load();//reiniciar nivel
             }
             lifeText.text = vida.ToString();
-            CollectableSounds.AudioName = "Soundclip/hit";
+            CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/daño";
             CollectableSounds.Play = true;
         }
     }

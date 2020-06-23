@@ -28,7 +28,7 @@ public class Reset_Scene : MonoBehaviour {
         Load();
     }
 
-    private void Load()
+    public void Load()
     {
         SceneManager.LoadScene(CurrentScene.name);
     }

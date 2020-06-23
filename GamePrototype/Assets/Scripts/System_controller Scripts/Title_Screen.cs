@@ -9,6 +9,5 @@ public class Title_Screen : MonoBehaviour
     public void LoadFirstScene()
     {
         SceneManager.LoadScene("Level2");
-        Debug.Log("Hello");
     }
 }

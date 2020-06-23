@@ -5,6 +5,10 @@ using UnityEngine;
 public class QBitMovement : MonoBehaviour
 {
     public GameObject objective;
+    public ClaseEntidad CharacterEntity;
+    public PlaySoundFX CollectableSounds;
+    public Reset_Scene ResetSceneManager;
+
     private GameObject pivot;
     private GameObject home;
 
@@ -220,5 +224,24 @@ public class QBitMovement : MonoBehaviour
         //}
         steering = transform.TransformDirection(steering);
         QBitController.Move(steering * Time.fixedDeltaTime);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit other)
+    {
+        if (other.gameObject.CompareTag("Player") && Character.canBeHurt && !Character.isInjured)
+        {
+            Debug.Log("Can't Be hurt");
+            Character.canBeHurt = false;
+            Character.isInjured = true;
+            CharacterEntity.vida--;
+            if (CharacterEntity.vida == 0)
+            {
+                CharacterEntity.vida = 4;
+                ResetSceneManager.Load();//reiniciar nivel
+            }
+            CharacterEntity.lifeText.text = CharacterEntity.vida.ToString();
+            CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/daño";
+            CollectableSounds.Play = true;
+        }
     }
 }

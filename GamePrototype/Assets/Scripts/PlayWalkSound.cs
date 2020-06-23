@@ -8,7 +8,7 @@ public class PlayWalkSound : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        CollectableSounds = GameObject.Find("Character Audio Source").GetComponent<PlaySoundFX>();
+        CollectableSounds = GameObject.Find("Moving Audio Source").GetComponent<PlaySoundFX>();
         CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/pasos";
         CollectableSounds.Play = true;
     }
