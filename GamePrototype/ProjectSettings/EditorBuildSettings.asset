@@ -6,9 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Escenas/CampoPruebas1.unity
+    path: Assets/Escenas/CampoPruebas2/CampoPruebas1.unity
     guid: 7222f34303d5eb240a0e546e44b60ec6
-  - enabled: 1
-    path: Assets/Escenas/CampoPruebas2.unity
+  - enabled: 0
+    path: Assets/Escenas/CampoPruebas2/CampoPruebas2.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Escenas/Title.unity
+    guid: e3e987ca78f73214489b599bbe96ff54
+  - enabled: 1
+    path: Assets/Escenas/Level2.unity
+    guid: 43ad99121cf04e4489f1d04704ce25da
+  - enabled: 1
+    path: Assets/Escenas/Level1.unity
+    guid: 91bfea393664b65499032b92c5d1fc93
+  - enabled: 1
+    path: Assets/Escenas/Level3.unity
+    guid: 69df375c16de09e49986fb35b020b297
+  - enabled: 1
+    path: Assets/Escenas/GameOver.unity
+    guid: 95bfc0e65d87875469c2473f405ffd65
   m_configObjects: {}

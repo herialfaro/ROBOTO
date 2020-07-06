@@ -5,6 +5,10 @@ using UnityEngine;
 public class QBitMovement : MonoBehaviour
 {
     public GameObject objective;
+    public ClaseEntidad CharacterEntity;
+    public PlaySoundFX CollectableSounds;
+    public Reset_Scene ResetSceneManager;
+
     private GameObject pivot;
     private GameObject home;
 
@@ -32,6 +36,8 @@ public class QBitMovement : MonoBehaviour
     private CharacterController QBitController;
     private SteeringManager manager;
 
+    private int UpdateCounter = 0;
+
     private void Awake()
     {
         home = new GameObject();
@@ -54,9 +60,14 @@ public class QBitMovement : MonoBehaviour
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
         randomRange = Random.Range(0.0f, 1.0f);
-        QBitState();
-        Locomotion();
-        Debug.Log(actualstate);
+
+        if(UpdateCounter > 6)
+        {
+            QBitState();
+            Locomotion();
+            UpdateCounter = 0;
+        }
+        UpdateCounter++;
     }
 
     private void QBitState()
@@ -189,7 +200,7 @@ public class QBitMovement : MonoBehaviour
                 Vector3 flee = manager.Flee(transform.position, objective.transform.position, moveSpeed, warningradius);
                 if (QBitController.velocity.magnitude > 0.1f)
                 {
-                    steering = steering + flee/2;
+                    steering = (steering + flee)/1.2f;
                 }
                 else
                 {
@@ -213,5 +224,24 @@ public class QBitMovement : MonoBehaviour
         //}
         steering = transform.TransformDirection(steering);
         QBitController.Move(steering * Time.fixedDeltaTime);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit other)
+    {
+        if (other.gameObject.CompareTag("Player") && Character.canBeHurt && !Character.isInjured)
+        {
+            Debug.Log("Can't Be hurt");
+            Character.canBeHurt = false;
+            Character.isInjured = true;
+            CharacterEntity.vida--;
+            if (CharacterEntity.vida == 0)
+            {
+                CharacterEntity.vida = 4;
+                ResetSceneManager.Load();//reiniciar nivel
+            }
+            CharacterEntity.lifeText.text = CharacterEntity.vida.ToString();
+            CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/daño";
+            CollectableSounds.Play = true;
+        }
     }
 }

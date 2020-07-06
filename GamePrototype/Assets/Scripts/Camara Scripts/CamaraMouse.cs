@@ -32,10 +32,16 @@ public class CamaraMouse : MonoBehaviour {
     private target[] target_list;
     private int target_counter;
 
+    //Variables de Colisiones
+    Vector3 Vector;
+    Vector3 highVector;
+    float plusY = .1f;
+    float Cam_PlayerDistance;
+
     private void Awake()
     {
         pivot = new GameObject();
-        this.transform.position = new Vector3(objective.transform.position.x + -1.5f, objective.transform.position.y + -1.0f, objective.transform.position.z + 6.93f);
+        this.transform.position = new Vector3(objective.transform.position.x + 0f, objective.transform.position.y + -1.0f, objective.transform.position.z + 7f);
         state_Locked = false;
         Lookforobjects = true;
         SelectStateEnabled = true;
@@ -61,29 +67,54 @@ public class CamaraMouse : MonoBehaviour {
 
     // Update is called once per frame
     private void LateUpdate() {
-
-        for(int i = 0; i < target_list.Length; i++)
+        if(target_list != null)
         {
-            float fDistance = Vector3.Distance(target_list[i].lockable_target.transform.position, objective.transform.position);
-            target_list[i].distance_target = fDistance;
-            if (fDistance <= lockOnRadius)
+            for (int i = 0; i < target_list.Length; i++)
             {
-                target_list[i].isLockable = true;
+                float fDistance = Vector3.Distance(target_list[i].lockable_target.transform.position, objective.transform.position);
+                target_list[i].distance_target = fDistance;
+                if (fDistance <= lockOnRadius)
+                {
+                    target_list[i].isLockable = true;
+                }
+                else
+                {
+                    target_list[i].isLockable = false;
+                    target_list[i].isOpen = true;
+                }
+            }
+            SelectState();
+            //Colision
+            Vector = objective.transform.position - transform.position;
+            Cam_PlayerDistance = Mathf.Sqrt(Mathf.Pow(Vector.x, 2) + Mathf.Pow(Vector.y, 2) + Mathf.Pow(Vector.z, 2));
+            RaycastHit hit;
+            //if (Physics.Raycast(objective.transform.position, transform.position, Cam_PlayerDistance)) ;
+            if (Physics.Raycast(objective.transform.position, transform.position, out hit, Cam_PlayerDistance))
+            {
+                highVector = hit.point;
+                highVector.y = hit.point.y + 2;
+                transform.position = Vector3.Lerp(transform.position, highVector, plusY);
+                //transform.position = Vector3.Lerp(transform.position, hit.point, plusY);    //AQUI PRRO ******************************
+                if (plusY < 0.5)
+                {
+                    plusY += .1f;
+                }
+                //Debug.Log("ALV PRRO");
             }
             else
             {
-                target_list[i].isLockable = false;
-                target_list[i].isOpen = true;
+                plusY = .1f;
             }
+            Debug.DrawLine(objective.transform.position, transform.position, Color.red);
         }
-        SelectState();
+        transform.LookAt(objective.transform);
     }
 
     private void CameraRotation()
     {
         var MoveX = 0f;
         var MoveY = 0f;
-        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+        /*if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
             MoveX = Input.GetAxis("Mouse X");
             MoveY = Input.GetAxis("Mouse Y");
@@ -94,7 +125,7 @@ public class CamaraMouse : MonoBehaviour {
             MoveX = Input.GetAxis("Joystick X");
             MoveY = Input.GetAxis("Joystick Y");
             VelRotacion = RawVelocity * 30;
-        }
+        }*/
 
         //if (MouseX != 0)
         //{

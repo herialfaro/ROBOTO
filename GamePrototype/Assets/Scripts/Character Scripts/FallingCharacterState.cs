@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FallingCharacterState : CharacterStateBase
 {
+    bool DoubleJump = false;
+
     public override void HandleInput(Character character)
     {
     }
+
 
     public override void OnEnter(Character character)
     {
@@ -14,15 +18,23 @@ public class FallingCharacterState : CharacterStateBase
 
     public override void FixedUpdate(Character character)
     {
-        Debug.Log("Estado Falling");
         Gravity(character);
-        if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
-        {
-            this.ToState(character, Character.Moving);
-        }
-        else if (character.IsGrounded)
+
+        if (character.IsGrounded)
         {
             this.ToState(character, Character.Grounded);
+            DoubleJump = false;
+        }
+        else if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            if (SubirPared.CanMove)
+            {
+                this.ToState(character, Character.Moving);
+            }
+        }
+        else if (character.IsInjured)
+        {
+            this.ToState(character, Character.Damage);
         }
     }
 

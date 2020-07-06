@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlaySoundFX : MonoBehaviour {
 
     public AudioClip FXClip;
-    private AudioSource Audio;
+    public AudioSource Audio;
 
-    public static string AudioName;
-    public static bool Play;
+    public string AudioName;
+    public bool Play;
 	// Use this for initialization
 	void Start () {
         Audio = this.gameObject.GetComponent<AudioSource>();

@@ -8,6 +8,7 @@ public class AnimacionesRoboto : MonoBehaviour {
     Animator animator;
     Character character_controller;
     public static bool punch_enabled;
+    public short floor_type;
 
     private float timespawn;
 
@@ -21,33 +22,58 @@ public class AnimacionesRoboto : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetButtonDown("Punch"))
+        if (Input.GetButton("Punch"))
         {
             animator.SetBool("isAtacando1", true);
-            timespawn = 0.5f;
+            timespawn = 0.3f;
             punch_enabled = true;
+        }
+        else if(Input.GetButton("Jump"))
+        {
+            animator.SetBool("isJumping1", true);
+            animator.SetBool("isAtacando1", false);
+            animator.SetBool("isMoving1", false);
+            animator.SetBool("isMovingGrass1", false);
         }
         else
         {
+            animator.SetBool("isJumping1", false);
             animator.SetBool("isAtacando1", false);
+            animator.SetBool("isMoving1", false);
+            animator.SetBool("isMovingGrass1", false);
         }
 
-        if(character_controller.state == Character.Moving)
+        if(Input.GetButton("Horizontal"))
         {
-
+            if(floor_type == 0)
+            {
+                animator.SetBool("isMovingGrass1", true);
+            }
+            else if (floor_type == 1)
+            {
+                animator.SetBool("isMoving1", true);
+            }
         }
-        else if(character_controller.state == Character.Jumping)
+        else if (Input.GetButton("Vertical"))
         {
-
+            if (floor_type == 0)
+            {
+                animator.SetBool("isMovingGrass1", true);
+            }
+            else if (floor_type == 1)
+            {
+                animator.SetBool("isMoving1", true);
+            }
         }
-        else if(character_controller.state == Character.Falling)
+        else
         {
-
+            animator.SetBool("isMoving1", false);
+            animator.SetBool("isMovingGrass1", false);
         }
 
         if (timespawn <= 0)
         {
-            timespawn = 0.5f;
+            timespawn = 0.3f;
             punch_enabled = false;
         }
         else

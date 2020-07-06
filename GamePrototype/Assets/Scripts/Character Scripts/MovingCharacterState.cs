@@ -18,11 +18,10 @@ public class MovingCharacterState : CharacterStateBase
 
     public override void FixedUpdate(Character character)
     {
-        Debug.Log("Estado Move");
         HandleMoving(character);
 
-
-         if (Input.GetButtonDown("Jump") && character.IsGrounded)
+        
+        if (Input.GetButton("Jump") && character.IsGrounded)
         {
             this.ToState(character, Character.Jumping);
         }
@@ -32,11 +31,18 @@ public class MovingCharacterState : CharacterStateBase
         }
         else if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
-            this.ToState(character, Character.Moving);
+            if (SubirPared.CanMove)
+            {
+                this.ToState(character, Character.Moving);
+            }
         }
-        else if (character.IsGrounded)
+        else if (character.IsGrounded && !character.IsInjured)
         {
             this.ToState(character, Character.Grounded);
+        }
+        else if (character.IsInjured)
+        {
+            this.ToState(character, Character.Damage);
         }
     }
 

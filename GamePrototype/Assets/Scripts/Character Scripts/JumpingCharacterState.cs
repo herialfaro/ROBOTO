@@ -13,13 +13,20 @@ public class JumpingCharacterState : CharacterStateBase
         Debug.Log("Estado Jump");
         HandleJump(character);
 
-        if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 00)
+        if (Input.GetAxisRaw("Horizontal") != 0.2 || Input.GetAxisRaw("Vertical") != 0)
         {
-            this.ToState(character, Character.Moving);
+            if (SubirPared.CanMove)
+            {
+                this.ToState(character, Character.Moving);
+            }
         }
-        else if (!character.IsGrounded)
+        else if (!character.IsGrounded && !character.IsInjured)
         {
             this.ToState(character, Character.Falling);
+        }
+        else if (character.IsInjured)
+        {
+            this.ToState(character, Character.Damage);
         }
     }
 
