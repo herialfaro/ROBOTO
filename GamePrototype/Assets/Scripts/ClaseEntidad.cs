@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ClaseEntidad : MonoBehaviour
 {
+    private Scene CurrentScene;
+
     public ushort vida;
     private ushort maxVida;
     private ushort coins;
@@ -25,11 +28,27 @@ public class ClaseEntidad : MonoBehaviour
         coinText.text = " + " + coins.ToString();
         gemText.text = " + " + gems.ToString();
         lifeText.text = vida.ToString();
+
+        CurrentScene = SceneManager.GetActiveScene();
     }
 
     private void Update()
     {
-        
+        if (coins >= GetCoinCounter.scene_coins.Length)
+        {
+            if(CurrentScene.name == "Level2")
+            {
+                SceneManager.LoadScene("Level1");
+            }
+            else if (CurrentScene.name == "Level1")
+            {
+                SceneManager.LoadScene("Level3");
+            }
+            else if (CurrentScene.name == "Level3")
+            {
+                SceneManager.LoadScene("GameOver");
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,7 +80,7 @@ public class ClaseEntidad : MonoBehaviour
             coins++;
             coinText.text = " + " + coins.ToString();
             //CollectableSounds.AudioName = "UI and Item Sound Effects/OGG/Item1A";
-            CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/gema";
+            CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/moneda";
             CollectableSounds.Play = true;
         }
     }
@@ -76,7 +95,7 @@ public class ClaseEntidad : MonoBehaviour
             vida--;
             if (vida == 0)
             {
-                ResetSceneManager.Load();//reiniciar nivel
+                SceneManager.LoadScene("GameOver");
             }
             lifeText.text = vida.ToString();
             CollectableSounds.AudioName = "UI and Item Sound Effects/Custom/daño";

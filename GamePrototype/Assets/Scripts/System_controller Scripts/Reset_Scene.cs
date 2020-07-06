@@ -7,11 +7,8 @@ using System.Runtime.InteropServices;
 
 public class Reset_Scene : MonoBehaviour {
 
-    private Scene CurrentScene;
-
 	// Use this for initialization
 	void Start () {
-        CurrentScene = SceneManager.GetActiveScene();
     }
 	
 	// Update is called once per frame
@@ -30,6 +27,6 @@ public class Reset_Scene : MonoBehaviour {
 
     public void Load()
     {
-        SceneManager.LoadScene(CurrentScene.name);
+        SceneManager.LoadScene("GameOver");
     }
 }

@@ -8,6 +8,7 @@ public class AnimacionesRoboto : MonoBehaviour {
     Animator animator;
     Character character_controller;
     public static bool punch_enabled;
+    public short floor_type;
 
     private float timespawn;
 
@@ -32,25 +33,42 @@ public class AnimacionesRoboto : MonoBehaviour {
             animator.SetBool("isJumping1", true);
             animator.SetBool("isAtacando1", false);
             animator.SetBool("isMoving1", false);
+            animator.SetBool("isMovingGrass1", false);
         }
         else
         {
             animator.SetBool("isJumping1", false);
             animator.SetBool("isAtacando1", false);
             animator.SetBool("isMoving1", false);
+            animator.SetBool("isMovingGrass1", false);
         }
 
         if(Input.GetButton("Horizontal"))
         {
-            animator.SetBool("isMoving1", true);
+            if(floor_type == 0)
+            {
+                animator.SetBool("isMovingGrass1", true);
+            }
+            else if (floor_type == 1)
+            {
+                animator.SetBool("isMoving1", true);
+            }
         }
         else if (Input.GetButton("Vertical"))
         {
-            animator.SetBool("isMoving1", true);
+            if (floor_type == 0)
+            {
+                animator.SetBool("isMovingGrass1", true);
+            }
+            else if (floor_type == 1)
+            {
+                animator.SetBool("isMoving1", true);
+            }
         }
         else
         {
             animator.SetBool("isMoving1", false);
+            animator.SetBool("isMovingGrass1", false);
         }
 
         if (timespawn <= 0)

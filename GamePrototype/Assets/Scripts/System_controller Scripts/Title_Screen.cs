@@ -10,4 +10,14 @@ public class Title_Screen : MonoBehaviour
     {
         SceneManager.LoadScene("Level2");
     }
+
+    public void LoadTitle()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }    
 }
