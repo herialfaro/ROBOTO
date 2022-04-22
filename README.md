@@ -2,9 +2,9 @@
 
 A 3D platformer videogame prototype developed in Unity.
 
-Video demonstration: https://youtu.be/eVnLSmf9C00
+Demo 1: https://youtu.be/eVnLSmf9C00
 
-Video demonstration: https://youtu.be/iVwHlAqAtMI
+Demo 2: https://youtu.be/iVwHlAqAtMI
 
 # My contributions
 
